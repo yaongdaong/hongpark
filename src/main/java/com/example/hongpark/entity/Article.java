@@ -4,9 +4,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
 
 // Entity 어노테이션이 붙은 클래스를 기반으로 DB에 테이블이 생성됨
 // 테이블 이름은 클래스 이름과 동일하게 Article로 생성된다.
+@AllArgsConstructor
+@ToString
 @Entity
 public class Article {
     // 엔티티의 대푯값 지정
@@ -22,19 +26,22 @@ public class Article {
     private String content;
 
     // Article 생성자 추가(객체의 생성 및 초기화)
-    public Article(Long id, String title, String content) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-    }
+    // @AllArgsConstructor로 대체
+    //public Article(Long id, String title, String content) {
+    //    this.id = id;
+    //    this.title = title;
+    //    this.content = content;
+    //}
+    //
 
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                '}';
-    }
+    // @ToString으로 대체
+    //@Override
+    //public String toString() {
+    //    return "Article{" +
+    //            "id=" + id +
+    //            ", title='" + title + '\'' +
+    //            ", content='" + content + '\'' +
+    //            '}';
+    //}
 
 }

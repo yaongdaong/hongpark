@@ -3,11 +3,14 @@ package com.example.hongpark.controller;
 import com.example.hongpark.dto.ArticleForm;
 import com.example.hongpark.entity.Article;
 import com.example.hongpark.repository.ArticleRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+// 로깅 기능을 위한 어노테이션 추가
+@Slf4j
 // 컨트롤러 선언
 @Controller
 public class ArticleController {
@@ -23,7 +26,8 @@ public class ArticleController {
 
     @PostMapping("/articles/create")
     public String createArticle(ArticleForm form){ // 폼 데이터를 DTO로 받기
-        System.out.println(form.toString()); // DTO에 폼 데이터가 잘 담겼는지 확인
+        log.info(form.toString());
+        //System.out.println(form.toString()); // DTO에 폼 데이터가 잘 담겼는지 확인
         // 1. DTO를 엔티티(자바 객체를 DB가 이해할 수 있게 만든 것, 이를 기반으로 테이블 생성됨)로 변환
         Article article = form.toEntity();
         // DTO가 엔티티로 잘 변환되는지 확인 출력
@@ -32,7 +36,9 @@ public class ArticleController {
         // article 엔티티를 저장해 saved 객체에 반환
         Article saved = articleRepository.save(article);
         // article이 DB에 잘 저장되는지 확인 출력
-        System.out.println(saved.toString());
+        log.info(saved.toString());
+        //System.out.println(saved.toString());
+        // 실제 서버에서는 pringln()문으로 데이터를 검증하면 기록에 남지 않을뿐더러 서버의 성능에도 악영향을 끼침
         return "";
     }
 }
