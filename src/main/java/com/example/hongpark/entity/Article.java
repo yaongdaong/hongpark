@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 // Entity 어노테이션이 붙은 클래스를 기반으로 DB에 테이블이 생성됨
@@ -12,6 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
+@NoArgsConstructor // 기본생성자(생성자인데 매개변수가 없는 생성자) 추가
 public class Article {
     // 엔티티의 대푯값 지정
     @Id

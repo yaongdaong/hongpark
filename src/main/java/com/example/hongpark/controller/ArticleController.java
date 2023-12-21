@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Optional;
+import java.util.ArrayList;
 
 
 // 로깅 기능을 위한 어노테이션 추가
@@ -31,7 +31,7 @@ public class ArticleController {
     }
 
     @PostMapping("/articles/create")
-    public String createArticle(ArticleForm form){ // 폼 데이터를 DTO로 받기
+    public String createArticle(ArticleForm form) { // 폼 데이터를 DTO로 받기
         log.info(form.toString());
         //System.out.println(form.toString()); // DTO에 폼 데이터가 잘 담겼는지 확인
         // 1. DTO를 엔티티(자바 객체를 DB가 이해할 수 있게 만든 것, 이를 기반으로 테이블 생성됨)로 변환
@@ -50,15 +50,26 @@ public class ArticleController {
 
     @GetMapping("/articles/{id}") // 데이터 조회 요청 접수
     // @PathVariable은 URL요청으로 들어온 전달값을 컨트롤러의 매개변수로 가져오는 어노테이션
-    public String show(@PathVariable Long id, Model model){ // 매개변수로 id 받아 오기
-        log.info("id = "+id); // id를 잘 받았는지 확인하는 로그 찍기
+    public String show(@PathVariable Long id, Model model) { // 매개변수로 id 받아 오기
+        log.info("id = " + id); // id를 잘 받았는지 확인하는 로그 찍기
         //1. id를 조회해 db에서 해당 데이터 가져오기
-        Optional<Article> articleEntity = articleRepository.findById(id);
-        //Article articleEntity = articleRepository.findById(id).orElse(null);
+        //Optional<Article> articleEntity = articleRepository.findById(id);
+        Article articleEntity = articleRepository.findById(id).orElse(null);
         //2. 가져온 데이터를 모델에 등록하기
         // 데이터를 모델에 등록하는 이유는 MVC 패턴에 따라 조회한 데이터를 뷰페이지에서 사용하기 위해서임
-        model.addAttribute("article",articleEntity);
+        model.addAttribute("article", articleEntity);
         //3. 조회한 데이터를 사용자에게 보여 주기 위한 뷰 페이지 만들기
         return "articles/show";
+    }
+
+    @GetMapping("/articles")
+    // 단일 데이터를 조회할 때는 리파지터리가 엔티티를 반환, 데이터 목록을 조회할 때는 엔티티 묶음인 리스트를
+    public String index(Model model){
+        // 1. DB에서 모든 Articles 데이터 가져오기
+        ArrayList<Article> articleList = articleRepository.findAll();
+        // 2. 가져온 Article 묶음을 모델에 등록하기
+        model.addAttribute("articleList",articleList);
+        // 3. 사용자에게 보여 줄 뷰 페이지 설정하기
+        return "articles/index";
     }
 }
