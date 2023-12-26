@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class FirstController {
 
+    @GetMapping("/")
+    public String home(){
+        return "hello";
+    }
+
     // 클라이언트의 URL 요청을 받아 특정 컨트롤러의 메서드가 처리하게 한다.
     @GetMapping("/hi")
     // 모델은 컨트롤러의 메서드에서 매개변수로 받아온다. 데이터를 관리하는 역할

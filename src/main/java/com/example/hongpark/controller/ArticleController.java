@@ -45,7 +45,7 @@ public class ArticleController {
         log.info(saved.toString());
         //System.out.println(saved.toString());
         // 실제 서버에서는 pringln()문으로 데이터를 검증하면 기록에 남지 않을뿐더러 서버의 성능에도 악영향을 끼침
-        return "";
+        return "redirect:/articles/"+saved.getId();
     }
 
     @GetMapping("/articles/{id}") // 데이터 조회 요청 접수
@@ -62,9 +62,22 @@ public class ArticleController {
         return "articles/show";
     }
 
+
+    // 데이터 조회 과정
+    //웹 페이지에서 게시글을 등록하면 서버를 통해 db에 저장됨.
+    //1.사용자가 웹 페이지에서 데이터를 조회해 달라고 url 요청 보냄
+    //2.서버의 컨트롤러가 이 요청을 받아 해당 url에서 찾으려는 데이터 정보(id)를 리파지터리에 전달
+    //3.리파지터리는 정보(id)를 가지고 db에 데이터 조회 요청
+    //4.db는 해당 데이터를 찾아 이를 엔티티로 반환
+    //5.반환된 엔티티는 모델을 통해 뷰 템플릿으로 전달
     @GetMapping("/articles")
     // 단일 데이터를 조회할 때는 리파지터리가 엔티티를 반환, 데이터 목록을 조회할 때는 엔티티 묶음인 리스트를
     public String index(Model model){
+        //반환 데이터 타입 불일치 문제 해결 방법
+        //특정 메서드가 반환하는 데이터 타입과 사용자가 작성한 반환 데이터 타입이 다를 경우, 3가지 방법으로 해결 가능
+        //1. 메서드가 반환하는 데이터 타입을 사용자가 작성한 데이터 타입으로 캐스팅(형변환)하기
+        //2. 사용자가 작성한 데이터 타입을 메서드가 반환하는 데이터 타입으로 수정하기
+        //3. 메서드의 반환 데이터 타입을 원하는 타입으로 오버라이딩 하기
         // 1. DB에서 모든 Articles 데이터 가져오기
         ArrayList<Article> articleList = articleRepository.findAll();
         // 2. 가져온 Article 묶음을 모델에 등록하기

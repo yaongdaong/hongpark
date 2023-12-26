@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -13,6 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
+@Getter
 @NoArgsConstructor // 기본생성자(생성자인데 매개변수가 없는 생성자) 추가
 public class Article {
     // 엔티티의 대푯값 지정
@@ -26,6 +28,7 @@ public class Article {
     // content 필드 선언, DB 테이블의 content 열과 연결됨
     @Column
     private String content;
+
 
     // Article 생성자 추가(객체의 생성 및 초기화)
     // @AllArgsConstructor로 대체
