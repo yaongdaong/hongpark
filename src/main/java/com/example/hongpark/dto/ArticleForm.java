@@ -8,7 +8,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class ArticleForm {
-
+    private Long id;
     private String title; // 제목을 받을 필드
     private String content; // 내용을 받을 필드
 
@@ -33,6 +33,6 @@ public class ArticleForm {
     // Article.java에서 생성자를 확인해 보면 id, title, content를 매개변수로 받음
     // 아직 ArticleForm 객체에 id 정보는 없으므로 첫번 째 전달값은 null
     public Article toEntity() {
-        return new Article(null, title, content);
+        return new Article(id, title, content);
     }
 }
