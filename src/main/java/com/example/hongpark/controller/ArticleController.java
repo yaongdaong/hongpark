@@ -101,8 +101,20 @@ public class ArticleController {
     public String update(ArticleForm form){
         log.info(form.toString());
         // 1. dto를 엔티티로 변환
+        Article articleEntity = form.toEntity();
+        log.info(articleEntity.toString());
         // 2. 엔티티를 db에 저장
+        Article target = articleRepository.findById(articleEntity.getId()).orElse(null);
         // 3. 수정 결과 페이지로 리다이렉트 하기
-        return "";
+        if(target != null){
+            articleRepository.save(articleEntity);
+        }
+        return "redirect:/articles/"+articleEntity.getId();
+    }
+
+    @GetMapping("/articles/{id}/delete")
+    public String delete(){
+        log.info("삭제 요청이 들어왔습니다!!");
+        return null;
     }
 }

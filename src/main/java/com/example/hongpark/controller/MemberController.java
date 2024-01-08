@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
-
 @Slf4j
 @Controller
 public class MemberController {
@@ -47,8 +45,26 @@ public class MemberController {
 
     @GetMapping("/members")
     public String index(Model model){
-        ArrayList<Member> members = memberRepository.findAll();
+        Iterable<Member> members = memberRepository.findAll();
         model.addAttribute("members",members);
         return "members/index";
+    }
+
+    @GetMapping("/members/{id}/edit")
+    public String edit(@PathVariable Long id, Model model){
+        Member memberEntity = memberRepository.findById(id).orElse(null);
+        model.addAttribute("member",memberEntity);
+        return "members/edit";
+    }
+
+    @PostMapping("/members/update")
+    public String update(MemberForm form){
+        log.info(form.toString());
+        Member memberEntity = form.toEntity();
+        Member target = memberRepository.findById(memberEntity.getId()).orElse(null);
+        if (target != null){
+            memberRepository.save(memberEntity);
+        }
+        return "redirect:/members/"+memberEntity.getId();
     }
 }
