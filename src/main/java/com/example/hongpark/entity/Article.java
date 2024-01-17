@@ -1,9 +1,6 @@
 package com.example.hongpark.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,7 @@ public class Article {
     // 엔티티의 대푯값 지정
     @Id
     // 대표값을 자동으로 생성
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // db가 id 자동 생성
     private Long id;
     // title 필드 선언, DB 테이블의 title 열과 연결됨
     @Column
