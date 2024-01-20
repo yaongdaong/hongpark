@@ -26,7 +26,14 @@ public class Article {
     @Column
     private String content;
 
-
+    public void patch(Article article){
+        if (article.title != null){
+            this.title = article.title;
+        }
+        if(article.content != null){
+            this.content = article.content;
+        }
+    }
     // Article 생성자 추가(객체의 생성 및 초기화)
     // @AllArgsConstructor로 대체
     //public Article(Long id, String title, String content) {
