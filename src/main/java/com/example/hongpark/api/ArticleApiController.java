@@ -48,9 +48,17 @@ public class ArticleApiController {
     @DeleteMapping("/api/articles/{id}")
     public ResponseEntity<Article> delete(@PathVariable Long id){
         Article deleted = articleService.delete(id);
-        return (deleted != null)?
-                ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return (deleted != null) ?
+                ResponseEntity.status(HttpStatus.NO_CONTENT).build():
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
+    }
+
+    @PostMapping("/api/transaction-test")
+    public ResponseEntity<List<Article>> transactionTest(@RequestBody List<ArticleForm> dtos){
+        List<Article> createdList = articleService.createArticles(dtos);
+        return(createdList != null)?
+                ResponseEntity.status(HttpStatus.OK).body(createdList):
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }
