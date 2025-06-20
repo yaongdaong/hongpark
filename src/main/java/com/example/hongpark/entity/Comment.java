@@ -13,18 +13,24 @@ import lombok.ToString;
 @AllArgsConstructor // 모든 필드를 매개변수로 갖는 생성자 자동 생성
 @NoArgsConstructor // 매개변수가 아예 없는 기본 생성자 자동 생성
 public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    @JoinColumn(name = "article_id")
-    private Article article;
-    @Column
-    private String nickname;
-    @Column
-    private String body;
+    @Id // 대표키 지정
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // db가 자동으로 1씩 증가
+    private Long id; // 대표키
+    @ManyToOne // comment 엔티티와 article 엔티티를 다대일 관계로 설정
+    @JoinColumn(name = "article_id") // 외래키 생성, article 엔티티의 기본키(id)와 매핑
+    private Article article; // 해당 댓글의 부모 게시글
+    @Column // 해당 필드를 테이블의 속성으로 매핑
+    private String nickname; // 댓글을 단 사람
+    @Column // 해당 필드를 테이블의 속성으로 매핑
+    private String body; // 댓글 본문
 
     public static Comment createComment(CommentDto dto, Article article) {
+        // 게시글의 ID를 콘솔에 출력
+        System.out.println("게시글의 ID: " + article.getId());
+        System.out.println("게시글의 ID2: " + dto.getArticleId());
+
+        //System.out.println("디티오아이디값: "+dto.getId().getClass());
+
         // 에외 발생
         if (dto.getId() != null)
             throw new IllegalArgumentException("댓글 생성 실패! 댓글의 id가 없어야 합니다.");
@@ -39,9 +45,9 @@ public class Comment {
         if (this.id != dto.getId())
             throw new IllegalArgumentException("댓글 수정 실패! 잘못된 id가 입력됐습니다.");
         // 객체 갱신
-        if (dto.getNickname() != null)
-            this.nickname = dto.getNickname();
-        if (dto.getBody() != null)
-            this.body = dto.getBody();
+        if (dto.getNickname() != null) // 수정할 닉네임 데이터가 있다면
+            this.nickname = dto.getNickname(); // 내용 반영
+        if (dto.getBody() != null) // 수정할 본문 데이터가 있다면
+            this.body = dto.getBody(); // 내용 반영
     }
 }

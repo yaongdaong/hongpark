@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class FirstController {
 
     @GetMapping("/")
-    public String home(){
+    public String home() {
         return "hello";
     }
 
@@ -18,16 +18,21 @@ public class FirstController {
     // 모델은 컨트롤러의 메서드에서 매개변수로 받아온다. 데이터를 관리하는 역할
     public String niceToMeetYou(Model model) {
         // 모델에서 변수를 등록할 때 addAttribute()메서드를 사용
-        model.addAttribute("username","홍팍");
+        model.addAttribute("username", "홍팍");
         // 뷰 페이지 반환
         return "greetings";
+    }
+
+    @GetMapping("/selfcheck")
+    public String selfCheck() {
+        return "selfcheck19";
     }
 
     @GetMapping("/bye")
     // 모델 객체 받아 오기
     public String seeYouNext(Model model) {
         // 모델 변수 등록하기
-        model.addAttribute("nickname","홍길동");
+        model.addAttribute("nickname", "홍길동");
         return "goodbye";
     }
 }

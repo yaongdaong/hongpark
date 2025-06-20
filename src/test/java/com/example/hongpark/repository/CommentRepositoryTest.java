@@ -12,10 +12,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@DataJpaTest // 해당 클래스를 jpa와 연동해 테스팅
 class CommentRepositoryTest {
     @Autowired
-    CommentRepository commentRepository;
+    CommentRepository commentRepository; // commentrepository 객체 주입
 
     @Test
     @DisplayName("특정 게시글의 모든 댓글 조회")
